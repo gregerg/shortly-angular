@@ -21,5 +21,8 @@ client/lib
 # Floobits
 .floo
 .floobit
-.floo
 .flooignore
+
+
+!.gitkeep
+client/mongo

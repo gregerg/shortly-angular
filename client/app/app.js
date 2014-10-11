@@ -4,31 +4,62 @@ angular.module('shortly', [
   'shortly.shorten',
   'shortly.auth',
   'shortly.nav',
-  'ngRoute'
+  'ui.router'
 ])
-.config(function($routeProvider, $httpProvider) {
-  $routeProvider
-    .when('/signin', {
-      templateUrl: 'app/auth/signin.html',
-      controller: 'AuthController'
-    })
-    .when('/signup', {
-      templateUrl: 'app/auth/signup.html',
-      controller: 'AuthController'
-    })
-    .when('/links', {
-      templateUrl: 'app/links/links.html',
-      controller: 'LinksController',
-      authenticate: true
-    })
-    .when('/shorten', {
-      templateUrl: 'app/shorten/shorten.html',
-      controller: 'ShortenController',
-      authenticate: true
-    })
-    .otherwise({
-      redirectTo: '/links'
-    })
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $stateProvider
+      .state('signup', {
+        url: '/signup',
+        controller: 'AuthController',
+        templateUrl: '/app/auth/signup.html'
+      })
+      .state('signin', {
+        url: '/signin',
+        controller: 'AuthController',
+        templateUrl: '/app/auth/signin.html'
+      })
+      .state('nav',{
+        templateUrl: '/app/nav/nav.html'
+      })
+      .state('links', {
+        url: '/links',
+        controller: 'LinksController',
+        templateUrl: '/app/links/links.html',
+        authenticate: true,
+        resolve : {
+          linkdata: function(Links){
+            return Links.getLinks();
+          }
+        }
+      })
+      .state('shorten', {
+        url: '/shorten',
+        controller: 'ShortenController',
+        templateUrl: '/app/shorten/shorten.html',
+        authenticate: true
+      });
+      $urlRouterProvider.otherwise('/links');
+    //.when('/signin', {
+    //  templateUrl: 'app/auth/signin.html',
+    //  controller: 'AuthController'
+    //})
+    //.when('/signup', {
+    //  templateUrl: 'app/auth/signup.html',
+    //  controller: 'AuthController'
+    //})
+    //.when('/links', {
+    //  templateUrl: 'app/links/links.html',
+    //  controller: 'LinksController',
+    //  authenticate: true
+    //})
+    //.when('/shorten', {
+    //  templateUrl: 'app/shorten/shorten.html',
+    //  controller: 'ShortenController',
+    //  authenticate: true
+    //})
+    //.otherwise({
+    //  redirectTo: '/links'
+    //})
     // Your code here
 
     // We add our $httpInterceptor into the array
