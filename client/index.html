@@ -7,6 +7,15 @@
   </head>
   <body>
     <h1>Shortly</h1>
+<div ng-controller="NavController" >
+  <div ng-if="isAuthed()" class="navigation">
+    <ul>
+      <li><a href="#/links" ng-class="{ index: true, selected: isSelected('/links') }">All Links</a></li>
+      <li><a href="#/shorten" ng-class="{ create: true, selected: isSelected('/shorten') }">Shorten</a></li>
+    </ul>
+  <a href="#/signout" class="logout" ng-click='signout()'>Logout</a>
+  </div>
+</div>
 
     <!-- the ng-view directive is where our templates will be loaded into when naviagted to -->
     <div ng-view></div>
@@ -18,6 +27,7 @@
     <script src="app/links/links.js"></script>
     <script src="app/shorten/shorten.js"></script>
     <script src="app/services/services.js"></script>
+    <script src="app/nav/nav.js"></script>
     <script src="app/app.js"></script>
   </body>
 </html>

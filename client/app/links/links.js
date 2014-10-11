@@ -4,10 +4,13 @@ angular.module('shortly.links', [])
   // Your code here
   $scope.data = {};
   $scope.getLinks = function(){
-    $http.get('/api/links')
-    .then(function(res) {
-      $scope.data.links = res.data;
-    })
+    Links.getLinks()
+        .then(function(data) {
+          $scope.data.links = data;
+        })
+        .catch(function(err){
+          console.error(err);
+        });
   };
   $scope.getLinks();
 });

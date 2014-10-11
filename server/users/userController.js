@@ -16,7 +16,7 @@ module.exports = {
           return user.comparePasswords(password)
             .then(function(foundUser) {
               if (foundUser) {
-                var token = jwt.encode(user, 'secret');
+                var token = jwt.encode(user, '6ogpBDhRLVaJPNq4cJZM');
                 res.json({token: token});
               } else {
                 return next(new Error('No user'));
