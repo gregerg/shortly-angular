@@ -12,7 +12,7 @@ module.exports = {
           req.navLink = link;
           next();
         } else {
-          next(new Error('Link not added yet'));
+          next(new Error('Link not added yet: '+link));
         }
       })
       .fail(function (error) {

@@ -12,6 +12,7 @@
     <ul>
       <li><a href="#/links" ng-class="{ index: true, selected: isSelected('/links') }">All Links</a></li>
       <li><a href="#/shorten" ng-class="{ create: true, selected: isSelected('/shorten') }">Shorten</a></li>
+      <li><a href="#/links" >{{ location | json }}</a></li>
     </ul>
   <a href="#/signout" class="logout" ng-click='signout()'>Logout</a>
   </div>

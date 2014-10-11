@@ -151,3 +151,8 @@ input[type=url]:focus {
   clear: both;
 }
 
+input.filter, span.label {
+  display: inline-block;
+  float: left;
+}
+
