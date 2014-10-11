@@ -4,5 +4,6 @@ angular.module('shortly.nav', [])
   $scope.isAuthed = Auth.isAuth;
   $scope.isSelected = function(path){
     return ($location.path() === path);
-  }
+  };
+  $scope.signout = Auth.signout;
 });
