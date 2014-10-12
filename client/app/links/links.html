@@ -1,6 +1,6 @@
 <div id='container'>
   <!-- Your html here -->
-  <div ui-view="nav"></div>
+  <div ui-view></div>
   <span class="label">Filter links:</span><input type="text" class="filter" ng-model="searchText">
   <div class="link" ng-repeat="link in data.links | orderBy:'-visits' | filter:searchText" >
     <img src="/assets/redirect_icon.png">

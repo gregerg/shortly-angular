@@ -36,7 +36,7 @@ gulp.task('karma', shell.task([
 
 // start our node server using nodemon
 gulp.task('serve', function() {
-  nodemon({script: 'index.js', ignore: 'node_modules/**/*.js'});
+  nodemon({script: 'index.js', ignore: 'node_modules/**/*.js', nodeArgs: ['--debug=5858'] });
 });
 
 gulp.task('default', ['start']);

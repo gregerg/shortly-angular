@@ -7,38 +7,64 @@ angular.module('shortly', [
   'ui.router'
 ])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $urlRouterProvider
+    //.when('/', '/#/')
+    .otherwise('/');
+
   $stateProvider
-      .state('signup', {
-        url: '/signup',
-        controller: 'AuthController',
-        templateUrl: '/app/auth/signup.html'
-      })
-      .state('signin', {
-        url: '/signin',
-        controller: 'AuthController',
-        templateUrl: '/app/auth/signin.html'
-      })
-      .state('nav',{
-        templateUrl: '/app/nav/nav.html'
-      })
-      .state('links', {
-        url: '/links',
-        controller: 'LinksController',
-        templateUrl: '/app/links/links.html',
+      .state('root', {
+        url: '',
         authenticate: true,
+        views: {
+          'nav': {
+            templateUrl: '/app/nav/nav.html',
+            controller: 'NavController'
+          }
+        }
+      })
+      .state('root.signup', {
+        url: '/signup',
+        views: {
+          'main@':{
+            templateUrl: '/app/auth/signup.html',
+            controller: 'AuthController'
+          }
+        }
+      })
+      .state('root.signin', {
+        url: '/signin',
+        views: {
+          'main@':{
+            controller: 'AuthController',
+            templateUrl: '/app/auth/signin.html'
+          }
+        }
+      })
+      .state('root.links', {
+        url: '/links',
+        authenticate: true,
+        views: {
+          'main@':{
+            controller: 'LinksController',
+            templateUrl: '/app/links/links.html'
+          }
+        },
         resolve : {
           linkdata: function(Links){
             return Links.getLinks();
           }
         }
       })
-      .state('shorten', {
+      .state('root.shorten', {
         url: '/shorten',
-        controller: 'ShortenController',
-        templateUrl: '/app/shorten/shorten.html',
-        authenticate: true
+        authenticate: true,
+        views: {
+          'main@':{
+            controller: 'ShortenController',
+            templateUrl: '/app/shorten/shorten.html'
+          }
+        }
       });
-      $urlRouterProvider.otherwise('/links');
     //.when('/signin', {
     //  templateUrl: 'app/auth/signin.html',
     //  controller: 'AuthController'
@@ -91,8 +117,9 @@ angular.module('shortly', [
   // when it does change routes, we then look for the token in localstorage
   // and send that token to the server to see if it is a real user or hasn't expired
   // if it's not valid, we then redirect back to signin/signup
-  $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+  $rootScope.$on('$stateChangeStart', function (evt, next, current) {
+    console.log('stateChangeStart fired!');
+    if (next && next.authenticate && !Auth.isAuth()) {
       $location.path('/signin');
     }
   });

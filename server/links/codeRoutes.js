@@ -10,5 +10,4 @@ module.exports = function (app) {
   app.param('code', linksController.findUrl);
 
   app.get('/:code', linksController.navToLink);
-
 };

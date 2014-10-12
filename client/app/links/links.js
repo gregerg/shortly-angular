@@ -5,7 +5,7 @@ angular.module('shortly.links', [])
   $scope.data = {
     links: linkdata,
     location: $location.path(),
-    signout: Auth.signout()
+    signout: Auth.signout
   };
   //$scope.getLinks = function(){
   //  Links.getLinks()

@@ -1,7 +1,7 @@
 <div class="navigation">
   <ul>
-    <li><a href="#/links" ng-class="{ index: true, selected: data.location === '/links' }">All Links</a></li>
-    <li><a href="#/shorten" ng-class="{ create: true, selected: data.location === '/shorten' }">Shorten</a></li>
+    <li><a href="#/links" ng-class="{ index: true, selected: location === '/links' }">All Links</a></li>
+    <li><a href="#/shorten" ng-class="{ create: true, selected: location === '/shorten' }">Shorten</a></li>
   </ul>
-  <a href="#/signout" class="logout" ng-click='data.signout()'>Logout</a>
+  <a href="#/signout" class="logout" ng-click='signout()'>Logout</a>
 </div>
