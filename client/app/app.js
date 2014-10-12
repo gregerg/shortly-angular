@@ -8,13 +8,13 @@ angular.module('shortly', [
 ])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider
-    //.when('/', '/#/')
-    .otherwise('/');
+     .otherwise('/');
 
   $stateProvider
       .state('root', {
-        url: '',
+        url: '/',
         authenticate: true,
+        isRoot: true,
         views: {
           'nav': {
             templateUrl: '/app/nav/nav.html',
@@ -23,7 +23,7 @@ angular.module('shortly', [
         }
       })
       .state('root.signup', {
-        url: '/signup',
+        url: 'signup',
         views: {
           'main@':{
             templateUrl: '/app/auth/signup.html',
@@ -32,7 +32,7 @@ angular.module('shortly', [
         }
       })
       .state('root.signin', {
-        url: '/signin',
+        url: 'signin',
         views: {
           'main@':{
             controller: 'AuthController',
@@ -41,7 +41,7 @@ angular.module('shortly', [
         }
       })
       .state('root.links', {
-        url: '/links',
+        url: 'links',
         authenticate: true,
         views: {
           'main@':{
@@ -56,7 +56,7 @@ angular.module('shortly', [
         }
       })
       .state('root.shorten', {
-        url: '/shorten',
+        url: 'shorten',
         authenticate: true,
         views: {
           'main@':{
@@ -109,7 +109,7 @@ angular.module('shortly', [
   };
   return attach;
 })
-.run(function ($rootScope, $location, Auth) {
+.run(function ($rootScope, $location, $state, Auth) {
   // here inside the run phase of angular, our services and controllers
   // have just been registered and our app is ready
   // however, we want to make sure the user is authorized
@@ -117,10 +117,16 @@ angular.module('shortly', [
   // when it does change routes, we then look for the token in localstorage
   // and send that token to the server to see if it is a real user or hasn't expired
   // if it's not valid, we then redirect back to signin/signup
-  $rootScope.$on('$stateChangeStart', function (evt, next, current) {
+  $rootScope.$on('$stateChangeStart', function (evt, to, toParams, from, fromParams) {
     console.log('stateChangeStart fired!');
-    if (next && next.authenticate && !Auth.isAuth()) {
-      $location.path('/signin');
+    if (to && to.authenticate) {
+      if (!Auth.isAuth()) {
+        evt.preventDefault();
+        $state.go('root.signin');
+      } else if(to.isRoot === true){
+        //$state.go('root.links')
+        $location.path('/links');
+      }
     }
   });
 });
